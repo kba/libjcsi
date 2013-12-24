@@ -9,6 +9,7 @@ public class SCBExampleJCurses {
         try {
             ConsoleSystemInterface csi = new JCursesConsoleInterface();
             new SCBExample(csi);
+            System.exit(0);
         } catch (ExceptionInInitializerError eiie) {
             System.out.println("Fatal Error Initializing Swing Console Box");
             eiie.printStackTrace();
