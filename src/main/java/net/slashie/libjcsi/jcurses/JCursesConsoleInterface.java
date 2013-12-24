@@ -88,7 +88,9 @@ public class JCursesConsoleInterface implements ConsoleSystemInterface {
 
     public CharKey inkey() {
         InputChar c = Toolkit.readCharacter();
-        if (c == null) return null;
+        while (c == null) {
+        	c = Toolkit.readCharacter();
+        }
         return new CharKey(ASCtoCharKeyCode(c.getCode()));
     }
 

@@ -26,7 +26,7 @@ public class JCursesExample {
         while (c==null) {
         	c = csi.inkey();
         }
-        	csi.print(3, 1, "Waiting for input");
+        csi.print(3, 1, "Waiting for input");
         csi.print(4, 10, "You pressed " + c.code);
         
         c = null;

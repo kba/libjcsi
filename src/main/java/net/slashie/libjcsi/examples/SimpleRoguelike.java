@@ -3,18 +3,16 @@ package net.slashie.libjcsi.examples;
 import net.slashie.libjcsi.CSIColor;
 import net.slashie.libjcsi.CharKey;
 import net.slashie.libjcsi.ConsoleSystemInterface;
-import net.slashie.libjcsi.jcurses.JCursesConsoleInterface;
-import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 
 public class SimpleRoguelike {
-    //private ConsoleSystemInterface csi = new JCursesConsoleInterface();
-    private ConsoleSystemInterface csi = new WSwingConsoleInterface("Simple Roguelike - libjcsi Testing Grounds");
+    private ConsoleSystemInterface csi;
     private int a, b;
-
-    public static void main(String[] p) {
-        new SimpleRoguelike().run();
-    }
     
+    public SimpleRoguelike(ConsoleSystemInterface csi) {
+    	this.csi = csi;
+    	run();
+	}
+
     public void run () {
     	csi.cls();
         csi.print(5, 5, "Welcome to TEH game!", CSIColor.BABY_BLUE);
