@@ -225,4 +225,14 @@ public interface ConsoleSystemInterface {
      */
     public void shutdown();
 
+	/**
+	 * @return  Max width of this console
+	 */
+	int getYdim();
+
+	/**
+	 * @return  Max height of this console
+	 */
+	int getXdim();
+
 }

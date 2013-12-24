@@ -113,7 +113,7 @@ class LuckProperties {
     ConsoleSystemInterface j = null;
     {
     	Properties p = new Properties();
-    	p.setProperty("font", "Arial");
+    	p.setProperty("font", "Consolas");
     	j = new WSwingConsoleInterface("LUCK - libjcsi Testing Grounds", p);
     }
 }

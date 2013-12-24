@@ -548,4 +548,12 @@ public class JCursesConsoleInterface implements ConsoleSystemInterface {
 		Toolkit.shutdown();
 	}
 
+	public int getYdim() {
+		return Toolkit.getScreenHeight();
+	}
+
+	public int getXdim() {
+		return Toolkit.getScreenWidth();
+	}
+
 }

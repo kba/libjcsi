@@ -40,7 +40,7 @@ public class RefreshTest {
             tempColor = list.get(rng.nextInt(list.size()));
             backColor = list.get(rng.nextInt(list.size()));
             for (int k = 0; k < mainInterface.ydim; k++) {
-                for (int i = 0; i < mainInterface.xdim; i++) {
+                for (int i = 0; i < mainInterface.getXdim(); i++) {
                     mainInterface.print(i, k, 'Q', tempColor, backColor);
                 }
             }

@@ -23,13 +23,13 @@ public class CustomColorImageTest {
             System.exit(-1);
         }
 
-        char[] c = new char[mainInterface.xdim * mainInterface.ydim];
+        char[] c = new char[mainInterface.getXdim() * mainInterface.ydim];
         c = text.toCharArray();
         int x = 0, g;
         CSIColor frontColor;
-        for (int i = 0; i < mainInterface.xdim; i++) {
+        for (int i = 0; i < mainInterface.getXdim(); i++) {
             for (int k = 0; k < mainInterface.ydim; k++) {
-                x = i + k * mainInterface.xdim;
+                x = i + k * mainInterface.getXdim();
 
                 frontColor = new CSIColor(CSIColor.ORANGE);
                 switch (c[x]) {

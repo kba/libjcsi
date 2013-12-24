@@ -35,8 +35,10 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
 
     // Static Attributes
     public static Font consoleFont;
-    public static int xdim = 80;
-    public static int ydim = 25;
+    private int xdim = 80;
+    public int getXdim() { return xdim; }
+    private int ydim = 25;
+    public int getYdim() { return xdim; }
     private CSIColor[][] colors;
 	private CSIColor[][] backcolors;
     private char[][] chars;
@@ -50,7 +52,10 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
     private FontMetrics fMetric;
     private Properties configuration;
 
-    /**
+
+
+
+	/**
      * Allows for setting the window's name and deploying as a
      * Java WebStart application.
      * @param windowName
@@ -108,14 +113,14 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
         
         String strConsoleFont = loadFont();
         consoleFont = new Font(strConsoleFont, Font.PLAIN, fontSize);
-        targetFrame.init(consoleFont, xdim, ydim);
+        targetFrame.init(consoleFont, getXdim(), ydim);
 
-        colors = new CSIColor[xdim][ydim];
-        backcolors = new CSIColor[xdim][ydim];
-        chars = new char[xdim][ydim];
-        colorsBuffer = new CSIColor[xdim][ydim];
-        backcolorsBuffer = new CSIColor[xdim][ydim];
-        charsBuffer = new char[xdim][ydim];
+        colors = new CSIColor[getXdim()][ydim];
+        backcolors = new CSIColor[getXdim()][ydim];
+        chars = new char[getXdim()][ydim];
+        colorsBuffer = new CSIColor[getXdim()][ydim];
+        backcolorsBuffer = new CSIColor[getXdim()][ydim];
+        charsBuffer = new char[getXdim()][ydim];
 		
 		
 
@@ -127,7 +132,7 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
         x = fMetric.getMaxAdvance();
         x = fMetric.charWidth('W'); //TODO: Which one to use?
         y = fMetric.getHeight() - 1;
-        targetFrame.setSize((xdim * x) + x, (ydim * y) + y + y);
+        targetFrame.setSize((getXdim() * x) + x, (ydim * y) + y + y);
         targetFrame.setLocationRelativeTo(null); // places window in center of screen
         targetFrame.setResizable(false);
         locate(1, 1);
@@ -197,7 +202,7 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
         locate(x, y);
 
         for (int i = 0; i < what.length(); i++) {
-            if (xpos >= xdim) {
+            if (xpos >= getXdim()) {
                 xpos = 0;
                 ypos++;
             }
@@ -237,7 +242,7 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
 	    locate (x,y);
 		CSIColor front = CSIColor.getColorFromCode(color);
 		for (int i = 0; i < what.length(); i++){
-			if (xpos>=xdim){
+			if (xpos>=getXdim()){
 				xpos = 0;
 				ypos++;
 			}
@@ -365,7 +370,7 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
 
     private int defineFontSize(int scrHeight, int scrWidth) {
         int byHeight = (int) (scrHeight / ydim);
-        int byWidth = (int) (scrWidth / (xdim));
+        int byWidth = (int) (scrWidth / (getXdim()));
 
         if (byHeight < byWidth) {
             return byHeight;
@@ -378,11 +383,11 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
     }
 
     public boolean isInsideBounds(Position p) {
-        return p.x >= 0 && p.x <= xdim && p.y >= 0 && p.y <= ydim;
+        return p.x >= 0 && p.x <= getXdim() && p.y >= 0 && p.y <= ydim;
     }
 
     public boolean isInsideBounds(int x, int y) {
-        return x >= 0 && x <= xdim - 1 && y >= 0 && y <= ydim - 1;
+        return x >= 0 && x <= getXdim() - 1 && y >= 0 && y <= ydim - 1;
     }
 
     public void safeprint(int x, int y, char what, int color) {

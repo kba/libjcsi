@@ -36,7 +36,7 @@ public class FullPalletTest {
 
         CSIColor tempColor = CSIColor.WHITE, backColor = CSIColor.BLACK;
         for (int k = 0; k < mainInterface.ydim; k++) {
-            for (int i = 0; i < mainInterface.xdim; i++) {
+            for (int i = 0; i < mainInterface.getXdim(); i++) {
 
                 if (!(x < list.size())) {
                     x = 0;

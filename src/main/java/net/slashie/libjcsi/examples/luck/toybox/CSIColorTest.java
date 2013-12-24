@@ -26,7 +26,7 @@ public class CSIColorTest {
 
         CSIColor tempColor;
         tempColor = CSIColor.BABY_BLUE;
-        for (int i = 0; i < mainInterface.xdim; i++) {
+        for (int i = 0; i < mainInterface.getXdim(); i++) {
             for (int k = 0; k < mainInterface.ydim; k++) {
                 tempColor = new CSIColor(i * xdiv, k * ydiv, (i * xdiv + k * ydiv) / 2);
                 mainInterface.print(i, k, "#", new CSIColor(tempColor));
