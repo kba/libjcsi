@@ -24,16 +24,16 @@ public class SimpleRoguelike {
             csi.refresh();
             int key = csi.inkey().code;
             switch (key){
-            case CharKey.UARROW:
+            case CharKey.UARROW: case CharKey.k:
             	b--;
             	break;
-            case CharKey.DARROW:
+            case CharKey.DARROW: case CharKey.j:
             	b++;
             	break;
-            case CharKey.LARROW:
+            case CharKey.LARROW: case CharKey.h:
             	a--;
             	break;
-            case CharKey.RARROW:
+            case CharKey.RARROW: case CharKey.l:
             	a++;
             	break;
             case CharKey.Q: case CharKey.q:
@@ -43,6 +43,7 @@ public class SimpleRoguelike {
         csi.print(1, 20, "Press space to continue");
         csi.refresh();
         csi.waitKey(CharKey.SPACE);
+        csi.shutdown();
         System.exit(0);
     }
 }

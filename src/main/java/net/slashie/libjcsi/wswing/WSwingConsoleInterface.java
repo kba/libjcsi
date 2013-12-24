@@ -442,4 +442,8 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
 			backcolorsBuffer[x] = backcolors[x].clone();
         }
     }
+
+	public void shutdown() {
+		// TODO Auto-generated method stub
+	}
 }

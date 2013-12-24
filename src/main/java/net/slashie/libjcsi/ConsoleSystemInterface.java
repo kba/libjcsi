@@ -194,4 +194,10 @@ public interface ConsoleSystemInterface {
      * @param color The color, a rgba instance of CSIColor
      */
     public void print(int x, int y, String what, CSIColor color);
+    
+    /**
+     * Clean up the view before exiting.
+     * 
+     */
+    public void shutdown();
 }

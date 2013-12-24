@@ -1,2 +1,2 @@
 JCurses
-[ ] Proper screen reset on exit (endwin must be called somehow)
+[x] ~~Proper screen reset on exit (endwin must be called somehow)~~ (ConsoleSystemInterface has shutdown method now)

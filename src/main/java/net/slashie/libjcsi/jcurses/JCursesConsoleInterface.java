@@ -524,4 +524,8 @@ public class JCursesConsoleInterface implements ConsoleSystemInterface {
     public void flushColorTable() {
         colorMap.clear();
     }
+
+	public void shutdown() {
+		Toolkit.shutdown();
+	}
 }
