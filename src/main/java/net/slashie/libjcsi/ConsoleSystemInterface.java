@@ -196,8 +196,33 @@ public interface ConsoleSystemInterface {
     public void print(int x, int y, String what, CSIColor color);
     
     /**
+     * Prints a String on the console, using a custom foreground and background color.
+     * 
+     * Does not check for running of the edge of the screen, so calling function
+     * must do such a check to avoid errors.
+     * @param x horizontal position
+     * @param y vertical position
+     * @param what The String to be printed
+     * @param color The color, a rgba instance of CSIColor
+     */
+	public void print(int x, int y, String what, CSIColor fg, CSIColor bg);
+
+    /**
+     * Prints a String on the console, using a custom foreground and background color.
+     * 
+     * Does not check for running of the edge of the screen, so calling function
+     * must do such a check to avoid errors.
+     * @param x horizontal position
+     * @param y vertical position
+     * @param what The char to be printed
+     * @param color The color, a rgba instance of CSIColor
+     */
+	public void print(int x, int y, char what, CSIColor fg, CSIColor bg);
+
+    /**
      * Clean up the view before exiting.
      * 
      */
     public void shutdown();
+
 }

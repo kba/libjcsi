@@ -3,12 +3,14 @@ package net.slashie.libjcsi.examples.luck.toybox;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+
 import net.slashie.libjcsi.CSIColor;
-import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
+import net.slashie.libjcsi.ConsoleSystemInterface;
+import net.slashie.libjcsi.jcurses.JCursesConsoleInterface;
 
 public class FullPalletTestJC {
 
-    WSwingConsoleInterface mainInterface;
+    ConsoleSystemInterface mainInterface;
     Random rng = new Random();
 
     public FullPalletTestJC() {
@@ -20,7 +22,7 @@ public class FullPalletTestJC {
         Collections.sort(list);
 
         try {
-            mainInterface = new WSwingConsoleInterface("CSIColor Test", false);
+            mainInterface = new JCursesConsoleInterface();
         } catch (ExceptionInInitializerError eiie) {
             System.out.println("Fatal Error Initializing Swing Console Box");
             eiie.printStackTrace();
@@ -29,8 +31,10 @@ public class FullPalletTestJC {
         int x = 0, times = 0;
 
         CSIColor tempColor = CSIColor.WHITE, backColor = CSIColor.BLACK;
-        for (int k = 0; k < mainInterface.ydim; k++) {
-            for (int i = 0; i < mainInterface.xdim; i++) {
+        int max_y = 25;
+        int max_x = 80;
+        for (int k = 0; k < max_y; k++) {
+            for (int i = 0; i < max_x; i++) {
 
                 if (!(x < list.size())) {
                     x = 0;
@@ -56,8 +60,8 @@ public class FullPalletTestJC {
                 mainInterface.print(i, k, 'Q', new CSIColor(tempColor), new CSIColor(backColor));
             }
         }
-
-
+        mainInterface.inkey();
+        mainInterface.shutdown();
     }
 
     public static void main(String[] args) {

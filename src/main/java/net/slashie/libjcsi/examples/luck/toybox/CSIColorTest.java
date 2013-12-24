@@ -1,6 +1,7 @@
 package net.slashie.libjcsi.examples.luck.toybox;
 
 import java.util.Random;
+
 import net.slashie.libjcsi.CSIColor;
 import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 

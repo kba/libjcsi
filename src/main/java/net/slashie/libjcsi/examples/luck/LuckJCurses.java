@@ -1,7 +1,8 @@
 package net.slashie.libjcsi.examples.luck;
 
 import net.slashie.libjcsi.CSIColor;
-import net.slashie.libjcsi.wswing.*;
+import net.slashie.libjcsi.ConsoleSystemInterface;
+import net.slashie.libjcsi.jcurses.JCursesConsoleInterface;
 
 /**
  *Version 3.3, 04/09/08,
@@ -11,7 +12,7 @@ import net.slashie.libjcsi.wswing.*;
  * Modified to work with the CSIColor construct
  * @author Santiago Zapata
  */
-class Luck {
+class LuckJCurses {
 
     int a, b, c, d, k, l, o, p, q, w, v, r, i, e = 600, f, h;
     boolean m[][];
@@ -28,10 +29,10 @@ class Luck {
     }
 
     public static void main(String[] p) {
-        new Luck();
+        new LuckJCurses();
     }
 
-    Luck() {
+    LuckJCurses() {
         j.cls();
         for (;;) {
             if (q == a & w == b) {
@@ -93,5 +94,5 @@ class Luck {
         j.refresh();
         j.waitKey(40);
     }
-    WSwingConsoleInterface j = new WSwingConsoleInterface("LUCK - libjcsi Testing Grounds");
+    ConsoleSystemInterface j = new JCursesConsoleInterface();
 }

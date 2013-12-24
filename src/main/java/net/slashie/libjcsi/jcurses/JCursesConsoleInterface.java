@@ -18,7 +18,8 @@ import jcurses.system.*;
  */
 public class JCursesConsoleInterface implements ConsoleSystemInterface {
 
-    private int[][] colors;
+    private int[][] fgColors;
+    private int[][] bgColors;
     private char[][] chars;
     private int[][] colorsBuffer;
     private char[][] charsBuffer;
@@ -28,7 +29,8 @@ public class JCursesConsoleInterface implements ConsoleSystemInterface {
 
     public JCursesConsoleInterface() {
         Toolkit.startPainting();
-        colors = new int[Toolkit.getScreenWidth() + 1][Toolkit.getScreenHeight() + 1];
+        fgColors = new int[Toolkit.getScreenWidth() + 1][Toolkit.getScreenHeight() + 1];
+        bgColors = new int[Toolkit.getScreenWidth() + 1][Toolkit.getScreenHeight() + 1];
         chars = new char[Toolkit.getScreenWidth() + 1][Toolkit.getScreenHeight() + 1];
         colorsBuffer = new int[Toolkit.getScreenWidth() + 1][Toolkit.getScreenHeight() + 1];
         charsBuffer = new char[Toolkit.getScreenWidth() + 1][Toolkit.getScreenHeight() + 1];
@@ -40,12 +42,12 @@ public class JCursesConsoleInterface implements ConsoleSystemInterface {
     
     public void print(int x, int y, char what, int color) {
         //if (isInsideBounds(x,y))
-        if (chars[x][y] == what && colors[x][y] == color) {
+        if (chars[x][y] == what && fgColors[x][y] == color) {
             return;
         }
         if (autorefresh)
         	Toolkit.printString(what + "", x, y, getJCurseColor(color));
-        colors[x][y] = color;
+        fgColors[x][y] = color;
         chars[x][y] = what;
     }
 
@@ -55,7 +57,7 @@ public class JCursesConsoleInterface implements ConsoleSystemInterface {
                 break;
             }
             chars[x + i][y] = what.charAt(i);
-            colors[x + i][y] = color;
+            fgColors[x + i][y] = color;
         }
         if (autorefresh)
         	Toolkit.printString(what, x, y, getJCurseColor(color));
@@ -72,7 +74,7 @@ public class JCursesConsoleInterface implements ConsoleSystemInterface {
 			if (what.charAt(i)== '�')
 				continue;
 			chars[x+i][y] = what.charAt(i);
-			colors[x+i][y] = color;
+			fgColors[x+i][y] = color;
 			Toolkit.printString(what.charAt(i)+"", x+i, y, getJCurseColor(color));
 		}
 
@@ -83,7 +85,7 @@ public class JCursesConsoleInterface implements ConsoleSystemInterface {
     }
 
     public int peekColor(int x, int y) {
-        return colors[x][y];
+        return fgColors[x][y];
     }
 
     public CharKey inkey() {
@@ -165,7 +167,7 @@ public class JCursesConsoleInterface implements ConsoleSystemInterface {
         for (int x = 0; x < chars.length; x++) {
             for (int y = 0; y < chars[0].length; y++) {
                 chars[x][y] = '\u0000';
-                colors[x][y] = ConsoleSystemInterface.BLACK;
+                fgColors[x][y] = ConsoleSystemInterface.BLACK;
             }
         }
     }
@@ -174,7 +176,7 @@ public class JCursesConsoleInterface implements ConsoleSystemInterface {
     	if (!autorefresh){
     		for (int x = 0; x < chars.length; x++) {
                 for (int y = 0; y < chars[0].length; y++) {
-                    Toolkit.printString(chars[x][y] + "", x, y, getJCurseColor(colors[x][y]));
+                    Toolkit.printString(chars[x][y] + "", x, y, getJCurseColor(fgColors[x][y]));
                 }
             }
         	
@@ -401,17 +403,17 @@ public class JCursesConsoleInterface implements ConsoleSystemInterface {
         System.arraycopy(colorsBuffer[i], 0, colors[i], 0, colors[i].length-1);
         System.arraycopy(charsBuffer[i], 0, chars[i], 0, colors[i].length-1);
         }*/
-        for (int x = 0; x < colors.length; x++) {
-            for (int y = 0; y < colors[0].length; y++) {
+        for (int x = 0; x < fgColors.length; x++) {
+            for (int y = 0; y < fgColors[0].length; y++) {
                 this.print(x, y, charsBuffer[x][y], colorsBuffer[x][y]);
             }
         }
     }
 
     public void saveBuffer() {
-        for (int i = 0; i < colors.length; i++) {
-            System.arraycopy(colors[i], 0, colorsBuffer[i], 0, colors[i].length - 1);
-            System.arraycopy(chars[i], 0, charsBuffer[i], 0, colors[i].length - 1);
+        for (int i = 0; i < fgColors.length; i++) {
+            System.arraycopy(fgColors[i], 0, colorsBuffer[i], 0, fgColors[i].length - 1);
+            System.arraycopy(chars[i], 0, charsBuffer[i], 0, fgColors[i].length - 1);
         }
     }
 
@@ -519,6 +521,23 @@ public class JCursesConsoleInterface implements ConsoleSystemInterface {
         int color = selectAproximateColor(csiColor);
         print(x, y, string, color);
     }
+	public void print(int x, int y, String what, CSIColor fgCSI, CSIColor bgCSI) {
+        int fg = selectAproximateColor(fgCSI);
+        int bg = selectAproximateColor(bgCSI);
+        for (int i = 0; i < what.length(); i++) {
+            if (!isInsideBounds(x + i, y)) {
+                break;
+            }
+            chars[x + i][y] = what.charAt(i);
+            fgColors[x + i][y] = fg;
+            bgColors[x + i][y] = bg;
+        }
+        if (autorefresh)
+        	Toolkit.printString(what, x, y, getJCurseColor(fg, bg));
+	}
+	public void print(int x, int y, char what, CSIColor fg, CSIColor bg) {
+		print(x,y,Character.toString(what), fg, bg);
+	}
 
     
     public void flushColorTable() {
@@ -528,4 +547,5 @@ public class JCursesConsoleInterface implements ConsoleSystemInterface {
 	public void shutdown() {
 		Toolkit.shutdown();
 	}
+
 }

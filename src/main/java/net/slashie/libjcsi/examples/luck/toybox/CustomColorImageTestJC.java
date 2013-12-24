@@ -65,6 +65,7 @@ public class CustomColorImageTestJC {
             }
         }
         mainInterface.waitKey(CharKey.SPACE);
+        mainInterface.shutdown();
     }
 
     public static void main(String[] args) {
