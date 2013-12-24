@@ -5,9 +5,9 @@
 package net.slashie.util;
 
 import java.util.Random;
+
 import net.slashie.libjcsi.CSIColor;
 import net.slashie.libjcsi.CharKey;
-import net.slashie.libjcsi.textcomponents.TextBox;
 import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 
 /**
@@ -23,8 +23,7 @@ public class CSIColorComparison {
     int n = 0,
             carrot = 0,
             backColor = 0,
-            frontColor = 17,
-            ydim = mainInterface.ydim;
+            frontColor = 17;
 
     public CSIColorComparison() {
         try {
@@ -211,9 +210,9 @@ public class CSIColorComparison {
         if (carrot >= colorList.length) {
             carrot--;
         }
-        if (carrot + 5 > n + ydim) {
+        if (carrot + 5 > n + mainInterface.getYdim()) {
             n++;
-            if ((n + ydim) > colorList.length) {
+            if ((n + mainInterface.getYdim()) > colorList.length) {
                 n--;
             }
         }
@@ -222,7 +221,7 @@ public class CSIColorComparison {
     private void printScreen() {
         CSIColor tempColor;
         mainInterface.cls();
-        for (int k = 0; k < ydim; k++) {
+        for (int k = 0; k < mainInterface.getYdim(); k++) {
             tempColor = colorList[colorOrder[n + k]];
             mainInterface.print(0, k, "    ", CSIColor.BLACK, tempColor);
             mainInterface.print(5, k, "     " + (colorOrder[n + k]) + " " + tempColor.toString(), tempColor);
