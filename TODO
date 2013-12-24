@@ -1,0 +1,2 @@
+JCurses
+[ ] Proper screen reset on exit (endwin must be called somehow)
