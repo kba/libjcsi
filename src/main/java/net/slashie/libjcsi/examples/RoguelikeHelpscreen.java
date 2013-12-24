@@ -1,31 +1,21 @@
 package net.slashie.libjcsi.examples;
 
 import java.util.Random;
-import net.slashie.libjcsi.CSIColor;
+
 import net.slashie.libjcsi.CharKey;
+import net.slashie.libjcsi.ConsoleSystemInterface;
 import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 
 /**
  *
  * @author ehoward
  */
-public class SwingTutorial {
+public class RoguelikeHelpscreen {
 
-    WSwingConsoleInterface mainInterface;
-    Random rng = new Random();
-    String mainText[] = {
-      ""
-    };
+    ConsoleSystemInterface mainInterface;
 
-    public SwingTutorial() {
-        try {
-            mainInterface = new WSwingConsoleInterface("Swing Tutorial");
-        } catch (ExceptionInInitializerError eiie) {
-            System.out.println("Fatal Error Initializing Swing Console Box");
-            eiie.printStackTrace();
-            System.exit(-1);
-        }
-
+    public RoguelikeHelpscreen(ConsoleSystemInterface csi) {
+    	this.mainInterface = csi;
         printScreen();
         showHelp();
         idleLoop();
@@ -54,7 +44,9 @@ public class SwingTutorial {
 
         switch (thisKey.code) {
             case CharKey.ESC:
+            case CharKey.q:
             case CharKey.Q:
+            	exit();
                 break;
             case CharKey.QUESTION:
                 showHelp();
@@ -62,7 +54,13 @@ public class SwingTutorial {
         }
     }
 
-    private void showHelp() {
+    private void exit() {
+    	mainInterface.refresh();
+    	mainInterface.shutdown();
+    	System.exit(0);
+	}
+
+	private void showHelp() {
         String helpText[] = {
             "Welcome to the Swing Tutorial for libjcsi!",
             "",
@@ -70,6 +68,8 @@ public class SwingTutorial {
             "7 8 9  y k u  Move cursor in given direction",
             "4   6  h   l  The arrow keys can also be used",
             "1 2 3  b j n",
+            "",
+            "Q / q / ESC -- Exit the game",
             "",
             "Enter - Make selection",
             "ESC - Cancel selection",
@@ -94,7 +94,4 @@ public class SwingTutorial {
         mainInterface.refresh();
     }
 
-    public static void main(String[] args) {
-        new SwingTutorial();
-    }
 }
