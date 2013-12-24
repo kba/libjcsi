@@ -1,23 +1,21 @@
 package net.slashie.libjcsi.examples;
 
 import net.slashie.libjcsi.ConsoleSystemInterface;
-import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 
 /**
  * This shows a basic output window using the Swing interface.
  * @author Santiago Zapata
  */
 public class SCBExample {
+	
+	private ConsoleSystemInterface	csi;
 
-    public static void main(String[] args) {
-        ConsoleSystemInterface csi = null;
-        try {
-            csi = new WSwingConsoleInterface("libjcsi example - Santiago Zapata");
-        } catch (ExceptionInInitializerError eiie) {
-            System.out.println("Fatal Error Initializing Swing Console Box");
-            eiie.printStackTrace();
-            System.exit(-1);
-        }
+	public SCBExample(ConsoleSystemInterface csi) {
+		this.csi = csi;
+		run();
+	}
+
+    public void run() {
         csi.cls();
         csi.print(1, 1, "Hello, Hello!", ConsoleSystemInterface.CYAN);
         csi.print(2, 3, "This is printed using the Java Console System Interface lib. (libjcsi)");
@@ -34,5 +32,7 @@ public class SCBExample {
         csi.print(9, 9, "/", ConsoleSystemInterface.BROWN);
 
         csi.print(8, 8, "@", ConsoleSystemInterface.RED);
+        csi.inkey();
+        csi.shutdown();
     }
 }
