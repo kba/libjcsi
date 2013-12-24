@@ -16,19 +16,19 @@ public class CustomColorImageTest {
 
     public CustomColorImageTest() {
         try {
-            mainInterface = new WSwingConsoleInterface("CSIColor Test", false);
+            mainInterface = new WSwingConsoleInterface("CSIColor Test");
         } catch (ExceptionInInitializerError eiie) {
             System.out.println("Fatal Error Initializing Swing Console Box");
             eiie.printStackTrace();
             System.exit(-1);
         }
 
-        char[] c = new char[mainInterface.getXdim() * mainInterface.ydim];
+        char[] c = new char[mainInterface.getXdim() * mainInterface.getYdim()];
         c = text.toCharArray();
         int x = 0, g;
         CSIColor frontColor;
         for (int i = 0; i < mainInterface.getXdim(); i++) {
-            for (int k = 0; k < mainInterface.ydim; k++) {
+            for (int k = 0; k < mainInterface.getYdim(); k++) {
                 x = i + k * mainInterface.getXdim();
 
                 frontColor = new CSIColor(CSIColor.ORANGE);

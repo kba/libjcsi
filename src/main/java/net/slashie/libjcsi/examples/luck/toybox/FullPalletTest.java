@@ -3,6 +3,7 @@ package net.slashie.libjcsi.examples.luck.toybox;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+
 import net.slashie.libjcsi.CSIColor;
 import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 
@@ -26,7 +27,7 @@ public class FullPalletTest {
         Collections.sort(list);
 
         try {
-            mainInterface = new WSwingConsoleInterface("CSIColor Test", false);
+            mainInterface = new WSwingConsoleInterface("CSIColor Test");
         } catch (ExceptionInInitializerError eiie) {
             System.out.println("Fatal Error Initializing Swing Console Box");
             eiie.printStackTrace();
@@ -35,7 +36,7 @@ public class FullPalletTest {
         int x = 0, times = 0;
 
         CSIColor tempColor = CSIColor.WHITE, backColor = CSIColor.BLACK;
-        for (int k = 0; k < mainInterface.ydim; k++) {
+        for (int k = 0; k < mainInterface.getYdim(); k++) {
             for (int i = 0; i < mainInterface.getXdim(); i++) {
 
                 if (!(x < list.size())) {

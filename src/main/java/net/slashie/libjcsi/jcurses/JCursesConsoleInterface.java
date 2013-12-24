@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import javax.tools.Tool;
+
 import net.slashie.libjcsi.CSIColor;
 import net.slashie.libjcsi.CharKey;
 import net.slashie.libjcsi.ConsoleSystemInterface;
@@ -36,7 +38,17 @@ public class JCursesConsoleInterface implements ConsoleSystemInterface {
         charsBuffer = new char[Toolkit.getScreenWidth() + 1][Toolkit.getScreenHeight() + 1];
     }
 
-    public void setAutoRefresh(boolean autorefresh) {
+    public JCursesConsoleInterface(String title) {
+        Toolkit.startPainting();
+        // TODO fix Toolkit to allow setting window title
+        fgColors = new int[Toolkit.getScreenWidth() + 1][Toolkit.getScreenHeight() + 1];
+        bgColors = new int[Toolkit.getScreenWidth() + 1][Toolkit.getScreenHeight() + 1];
+        chars = new char[Toolkit.getScreenWidth() + 1][Toolkit.getScreenHeight() + 1];
+        colorsBuffer = new int[Toolkit.getScreenWidth() + 1][Toolkit.getScreenHeight() + 1];
+        charsBuffer = new char[Toolkit.getScreenWidth() + 1][Toolkit.getScreenHeight() + 1];
+	}
+
+	public void setAutoRefresh(boolean autorefresh) {
 		this.autorefresh = autorefresh;
 	}
     

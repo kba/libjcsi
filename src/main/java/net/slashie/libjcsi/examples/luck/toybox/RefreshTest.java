@@ -3,9 +3,10 @@ package net.slashie.libjcsi.examples.luck.toybox;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+
 import net.slashie.libjcsi.CSIColor;
 import net.slashie.libjcsi.CharKey;
-import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
+import net.slashie.libjcsi.ConsoleSystemInterface;
 
 /**
  * This is a test for refreshing issues with the Swing interface.
@@ -13,10 +14,11 @@ import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
  */
 public class RefreshTest {
 
-    WSwingConsoleInterface mainInterface;
+    ConsoleSystemInterface mainInterface;
     Random rng = new Random();
 
-    public RefreshTest() {
+    public RefreshTest(ConsoleSystemInterface csi) {
+    	this.mainInterface = csi;
         ArrayList<CSIColor> list = new ArrayList<CSIColor>();
         for (int i = 0; i < CSIColor.FULL_PALLET.length; i++) {
             list.add(CSIColor.FULL_PALLET[i]);
@@ -24,33 +26,29 @@ public class RefreshTest {
 
         Collections.sort(list);
 
-        try {
-            mainInterface = new WSwingConsoleInterface("CSIColor Test", false);
-        } catch (ExceptionInInitializerError eiie) {
-            System.out.println("Fatal Error Initializing Swing Console Box");
-            eiie.printStackTrace();
-            System.exit(-1);
-        }
         int x = 0, times = 0;
         Random rng = new Random();
 
         CSIColor tempColor = CSIColor.WHITE, backColor = CSIColor.BLACK;
 
+        theLoop:
         do {
             tempColor = list.get(rng.nextInt(list.size()));
             backColor = list.get(rng.nextInt(list.size()));
-            for (int k = 0; k < mainInterface.ydim; k++) {
+            for (int k = 0; k < mainInterface.getYdim(); k++) {
                 for (int i = 0; i < mainInterface.getXdim(); i++) {
-                    mainInterface.print(i, k, 'Q', tempColor, backColor);
+                    mainInterface.print(i, k, 'X', tempColor, backColor);
                 }
             }
             mainInterface.refresh();
-            mainInterface.waitKey(CharKey.ENTER);
+            CharKey k = mainInterface.inkey();
+            switch(k.code) {
+            case CharKey.q : case CharKey.ESC :
+            	break theLoop;
+
+            }
         } while (true);
-
-    }
-
-    public static void main(String[] args) {
-        new RefreshTest();
+        mainInterface.shutdown();
+        System.exit(0);
     }
 }

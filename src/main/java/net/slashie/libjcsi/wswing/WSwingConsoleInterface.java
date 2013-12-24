@@ -39,8 +39,8 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
     public int getXdim() { return xdim; }
     private int ydim = 25;
     public int getYdim() { return xdim; }
-    private CSIColor[][] colors;
-	private CSIColor[][] backcolors;
+    private CSIColor[][] fgColors;
+	private CSIColor[][] bgColors;
     private char[][] chars;
     private CSIColor[][] colorsBuffer;
     private CSIColor[][] backcolorsBuffer;
@@ -113,14 +113,14 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
         
         String strConsoleFont = loadFont();
         consoleFont = new Font(strConsoleFont, Font.PLAIN, fontSize);
-        targetFrame.init(consoleFont, getXdim(), ydim);
+        targetFrame.init(consoleFont, getXdim(), getYdim());
 
-        colors = new CSIColor[getXdim()][ydim];
-        backcolors = new CSIColor[getXdim()][ydim];
-        chars = new char[getXdim()][ydim];
-        colorsBuffer = new CSIColor[getXdim()][ydim];
-        backcolorsBuffer = new CSIColor[getXdim()][ydim];
-        charsBuffer = new char[getXdim()][ydim];
+        fgColors = new CSIColor[getXdim()][getYdim()];
+        bgColors = new CSIColor[getXdim()][getYdim()];
+        chars = new char[getXdim()][getYdim()];
+        colorsBuffer = new CSIColor[getXdim()][getYdim()];
+        backcolorsBuffer = new CSIColor[getXdim()][getYdim()];
+        charsBuffer = new char[getXdim()][getYdim()];
 		
 		
 
@@ -169,11 +169,11 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
     }
 
     public void cls() {
-        for (int x = 0; x < colors.length; x++) {
-            for (int y = 0; y < colors[0].length; y++) {
+        for (int x = 0; x < fgColors.length; x++) {
+            for (int y = 0; y < fgColors[0].length; y++) {
                 chars[x][y] = ' ';
-                colors[x][y] = backColor;
-				backcolors[x][y] = backColor;
+                fgColors[x][y] = backColor;
+				bgColors[x][y] = backColor;
             }
         }
         targetFrame.cls();
@@ -211,8 +211,8 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
             }
             targetFrame.plot(what.charAt(i), xpos, ypos, colorPreProcess(color), colorPreProcess(background));
             chars[x + i][y] = what.charAt(i);
-            colors[x + i][y] = color;
-			backcolors[x + i][y] = background;
+            fgColors[x + i][y] = color;
+			bgColors[x + i][y] = background;
             xpos++;
         }
     }
@@ -229,9 +229,9 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
     public void print(int x, int y, char what, CSIColor color, CSIColor back) {
         locate(x, y);
         targetFrame.plot(what, xpos, ypos, colorPreProcess(color), colorPreProcess(back));
-        colors[x][y] = color;
+        fgColors[x][y] = color;
         chars[x][y] = what;
-		backcolors[x][y] = back;
+		bgColors[x][y] = back;
     }
 
     public void print(int x, int y, String what) {
@@ -251,7 +251,7 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
 			if (what.charAt(i) != '�') {
 				targetFrame.plot(what.charAt(i), xpos, ypos, colorPreProcess(front));
 	            chars[x+i][y] = what.charAt(i);
-				colors[x+i][y] = front;
+				fgColors[x+i][y] = front;
 			}
 	        xpos ++;
 	    }
@@ -338,11 +338,11 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
     }
 
     public int peekColor(int x, int y) {
-        return CSIColor.getCodeFromColor(colors[x][y]);
+        return CSIColor.getCodeFromColor(fgColors[x][y]);
     }
 
     public CSIColor peekCSIColor(int x, int y) {
-        return colors[x][y];
+        return fgColors[x][y];
     }
 
     private String loadFont() {
@@ -433,24 +433,24 @@ public class WSwingConsoleInterface implements ConsoleSystemInterface, Runnable,
     }
 
     public void restore() {
-        for (int x = 0; x < colors.length; x++) {
-            colors[x] = colorsBuffer[x].clone();
+        for (int x = 0; x < fgColors.length; x++) {
+            fgColors[x] = colorsBuffer[x].clone();
             chars[x] = charsBuffer[x].clone();
-			backcolors[x] = backcolorsBuffer[x].clone();
+			bgColors[x] = backcolorsBuffer[x].clone();
         }
         
-        for (int x = 0; x < colors.length; x++) {
-            for (int y = 0; y < colors[0].length; y++) {
-                this.print(x, y, chars[x][y], colors[x][y], backcolors[x][y]);
+        for (int x = 0; x < fgColors.length; x++) {
+            for (int y = 0; y < fgColors[0].length; y++) {
+                this.print(x, y, chars[x][y], fgColors[x][y], bgColors[x][y]);
             }
         }
     }
 
     public void saveBuffer() {
-    	for (int x = 0; x < colors.length; x++) {
-    		colorsBuffer[x] = colors[x].clone();
+    	for (int x = 0; x < fgColors.length; x++) {
+    		colorsBuffer[x] = fgColors[x].clone();
     		charsBuffer[x] = chars[x].clone();
-			backcolorsBuffer[x] = backcolors[x].clone();
+			backcolorsBuffer[x] = bgColors[x].clone();
         }
     }
 
